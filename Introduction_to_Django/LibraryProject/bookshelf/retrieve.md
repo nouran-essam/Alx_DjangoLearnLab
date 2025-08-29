@@ -1,6 +1,9 @@
-from bookshelf.models import Book
+### Retrieve a Book
 
-# Retrieve all books
-books = Book.objects.all()
-books
-<QuerySet [<Book: 1984 by George Orwell (1949)>]>
+To retrieve a single book by its ID, use the `get` method:
+
+```python
+from .models import Book
+
+book = Book.objects.get(id=1)
+print(book.title, book.author)
