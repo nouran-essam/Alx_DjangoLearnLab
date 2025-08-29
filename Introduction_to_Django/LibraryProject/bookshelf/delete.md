@@ -1,12 +1,15 @@
-from bookshelf.models import Book
 
-# Get the book instance
-book = Book.objects.get(title="Nineteen Eighty-Four")
+---
 
-# Delete the book
+## 4. **delete.md**
+```markdown
+### Delete a Book
+
+To delete a specific book from the database:
+
+```python
+from .models import Book
+
+book = Book.objects.get(title="1984")
 book.delete()
-
-# Confirm deletion
-Book.objects.all()
-(1, {'bookshelf.Book': 1})
-<QuerySet []>
+print("Book deleted successfully")
