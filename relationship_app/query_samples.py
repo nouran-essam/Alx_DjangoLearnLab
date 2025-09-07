@@ -15,26 +15,26 @@ django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
 
-# 1. Query all books by a specific author
-try:
-    author = Author.objects.get(name="John Doe")
+# استعلام كل مؤلفين باسم John Doe
+authors = Author.objects.filter(name="John Doe")
+for author in authors:
     books_by_author = Book.objects.filter(author=author)
-    print("Books by John Doe:", [book.title for book in books_by_author])
-except Author.DoesNotExist:
-    print("Author 'John Doe' not found. Please add data first.")
+    print(f"كتب المؤلف {author.name}:")
+    for book in books_by_author:
+        print(book.title)
 
-# 2. List all books in a library
-try:
-    library = Library.objects.get(name="Central Library")
-    books_in_library = library.books.all()
-    print("Books in Central Library:", [book.title for book in books_in_library])
-except Library.DoesNotExist:
-    print("Library 'Central Library' not found. Please add data first.")
+# استعلام كل الكتب في مكتبة Central Library
+libraries = Library.objects.filter(name="Central Library")
+for lib in libraries:
+    print(f"\nالكتب في مكتبة {lib.name}:")
+    for book in lib.books.all():
+        print(book.title)
 
-# 3. Retrieve the librarian for a library
-try:
-    library = Library.objects.get(name="Central Library")
-    librarian = library.librarian
-    print("Librarian of Central Library:", librarian.name)
-except (Library.DoesNotExist, Librarian.DoesNotExist):
-    print("Librarian or Library not found. Please add data first.")
+# استعلام أمين المكتبة
+for lib in libraries:
+    try:
+        librarian = Librarian.objects.get(library=lib)
+        print(f"\nأمين مكتبة {lib.name}:")
+        print(librarian.name)
+    except Librarian.DoesNotExist:
+        print(f"\nلا يوجد أمين لمكتبة {lib.name}")
